@@ -2,14 +2,11 @@ package br.com.ecommerce.entity;
 
 import jakarta.persistence.*;
 
-import lombok.*;
+
+
 import java.util.List;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Categoria {
 
 	@Id
@@ -18,7 +15,7 @@ public class Categoria {
 
 	@Column(nullable = false, unique = true)
 	private String nome;
-	
+
 	@Column(nullable = false, unique = true)
 	private String descricao;
 
@@ -32,10 +29,10 @@ public class Categoria {
 
 	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
 	private List<Produto> produtos;
-	
-public Categoria() {
-	
-}	
+
+	public Categoria() {
+
+	}
 
 	public Long getId() {
 		return id;
@@ -60,7 +57,5 @@ public Categoria() {
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-
-	
 
 }

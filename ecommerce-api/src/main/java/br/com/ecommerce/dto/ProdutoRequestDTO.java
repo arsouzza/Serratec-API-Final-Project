@@ -17,20 +17,32 @@ public class ProdutoRequestDTO {
 	private Double preco;
 	@NotBlank(message = "O ID da categoria é obrigatório!")
 	private Long categoriaId;
+	private Integer quantidadeEstoque;
 
 	public ProdutoRequestDTO() {
-		
+
 	}
 
-	public ProdutoRequestDTO(Long id, @NotBlank String nome, String descricao, Double preco, Integer estoque,
-			Long categoriaId) {
+	public ProdutoRequestDTO(Long id, String nome, String descricao, Double preco, Integer estoque,
+			Integer quantidadeEstoque, Long categoriaId) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.categoriaId = categoriaId;
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
+
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+}
 
 	public Long getId() {
 		return id;
@@ -64,13 +76,13 @@ public class ProdutoRequestDTO {
 		this.preco = preco;
 	}
 
-	public Long getCategoriaNome() {
-		return categoriaId;
-	}
-
 	public void setCategoriaId(Long categoriaId) {
 		this.categoriaId = categoriaId;
 	}
-	
-	
+
+	public Long getCategoriaId() {
+		return categoriaId;
+
+	}
+
 }

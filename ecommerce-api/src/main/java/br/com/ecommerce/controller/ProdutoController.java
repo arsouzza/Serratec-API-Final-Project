@@ -1,6 +1,9 @@
 package br.com.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ecommerce.dto.ProdutoRequestDTO;
@@ -40,6 +44,12 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id,
 			@Valid @RequestBody ProdutoRequestDTO dto) {
 		return ResponseEntity.ok(produtoService.atualizar(id, dto));
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ProdutoResponseDTO> atualizarEstoque(@PathVariable Long id, @RequestParam Integer quantidade){
+		ProdutoResponseDTO response = produtoService.atualizarEstoque(id, quantidade);
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping

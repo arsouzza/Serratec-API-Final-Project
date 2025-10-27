@@ -2,13 +2,7 @@ package br.com.ecommerce.entity;
 
 import jakarta.persistence.*;
 
-import lombok.*;
-
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Endereco {
 
 	@Id
@@ -36,9 +30,9 @@ public class Endereco {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
-	
+
 	public Endereco() {
-		
+
 	}
 
 	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String cidade, String uf,
@@ -117,7 +111,5 @@ public class Endereco {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
-	
-	
+
 }

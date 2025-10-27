@@ -3,16 +3,9 @@ package br.com.ecommerce.entity;
 import jakarta.persistence.*;
 
 
-import lombok.*;
-
-
 import java.util.List;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Produto {
 
 	@Id
@@ -23,6 +16,25 @@ public class Produto {
 	private String descricao;
 	private Double preco;
 
+	@Column(nullable = false)
+    private Integer quantidadeEstoque;
+	
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public List<PedidoProduto> getPedidoProdutos() {
+		return pedidoProdutos;
+	}
+
+	public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {
+		this.pedidoProdutos = pedidoProdutos;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
@@ -31,13 +43,14 @@ public class Produto {
 
 	}
 
-	public Produto(Long id, String nome, String descricao, Double preco, Categoria categoria) {
+	public Produto(Long id, String nome, String descricao, Double preco, Integer quantidadeEstoque, Categoria categoria) {
 			
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.categoria = categoria;
+		this.quantidadeEstoque = quantidadeEstoque;
 		
 	}
 

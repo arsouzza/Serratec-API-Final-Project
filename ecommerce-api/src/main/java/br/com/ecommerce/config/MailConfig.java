@@ -2,6 +2,8 @@ package br.com.ecommerce.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

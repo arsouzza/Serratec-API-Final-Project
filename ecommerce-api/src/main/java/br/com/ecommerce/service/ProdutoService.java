@@ -11,6 +11,7 @@ import br.com.ecommerce.entity.Produto;
 import br.com.ecommerce.repository.CategoriaRepository;
 import br.com.ecommerce.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
@@ -36,14 +37,16 @@ public class ProdutoService {
 		return ProdutoResponseDTO.fromEntity(produto);
 	}
 
+	@Transactional
 	public ProdutoResponseDTO inserir(ProdutoRequestDTO produtoRequestDTO) {
-		Categoria categoria = categoriaRepository.findById(produtoRequestDTO.getCategoriaNome())
+		Categoria categoria = categoriaRepository.findById(produtoRequestDTO.getCategoriaId())
 				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
 
 		Produto produto = new Produto();
 		produto.setNome(produtoRequestDTO.getNome());
 		produto.setDescricao(produtoRequestDTO.getDescricao());
 		produto.setPreco(produtoRequestDTO.getPreco());
+		produto.setQuantidadeEstoque(produtoRequestDTO.getQuantidadeEstoque());
 		produto.setCategoria(categoria);
 
 		produtoRepository.save(produto);
@@ -54,7 +57,7 @@ public class ProdutoService {
 		Produto produto = produtoRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
-		Categoria categoria = categoriaRepository.findById(dto.getCategoriaNome())
+		Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
 				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
 
 		produto.setNome(dto.getNome());
@@ -63,6 +66,20 @@ public class ProdutoService {
 		produto.setCategoria(categoria);
 
 		produtoRepository.save(produto);
+		return ProdutoResponseDTO.fromEntity(produto);
+	}
+	
+	@Transactional
+	public ProdutoResponseDTO atualizarEstoque(Long id, Integer quantidade) {
+		Produto produto = produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+	
+		int novoEstoque = produto.getQuantidadeEstoque() + quantidade;
+		if (novoEstoque <=0) {
+			throw new IllegalArgumentException("Estoque não pode ser negativo");
+		}
+		produto.setQuantidadeEstoque(novoEstoque);
+		produtoRepository.save(produto);
+		
 		return ProdutoResponseDTO.fromEntity(produto);
 	}
 

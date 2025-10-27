@@ -1,6 +1,7 @@
 package br.com.ecommerce.entity;
 
 import br.com.ecommerce.entity.enums.StatusPedido;
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
