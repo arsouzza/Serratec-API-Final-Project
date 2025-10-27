@@ -16,7 +16,7 @@ public class Produto {
 	private String descricao;
 	private Double preco;
 
-	@Column(nullable = false)
+	@Column
     private Integer quantidadeEstoque;
 	
 	public Integer getQuantidadeEstoque() {
@@ -36,7 +36,7 @@ public class Produto {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "categoria_id", nullable = false)
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
 	public Produto() {

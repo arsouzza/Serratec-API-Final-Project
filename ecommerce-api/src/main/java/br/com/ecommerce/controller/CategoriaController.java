@@ -6,6 +6,12 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +28,8 @@ public class CategoriaController {
 	@Autowired
     private CategoriaRepository categoriaRepository;
 
-    public CategoriaResponseDTO inserir(CategoriaRequestDTO dto) {
+    @PostMapping
+	public CategoriaResponseDTO inserir(@RequestBody CategoriaRequestDTO dto) {
         if (categoriaRepository.existsByNome(dto.getNome())) {
             throw new IllegalArgumentException("Já existe uma categoria com esse nome.");
         }
@@ -35,7 +42,8 @@ public class CategoriaController {
         return CategoriaResponseDTO.fromEntity(categoria);
     }
 
-    public CategoriaResponseDTO atualizar(Long id, CategoriaRequestDTO dto) {
+    @PutMapping("/{id}")
+    public CategoriaResponseDTO atualizar(@PathVariable Long id, @RequestBody CategoriaRequestDTO dto) {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
 
@@ -46,6 +54,7 @@ public class CategoriaController {
         return CategoriaResponseDTO.fromEntity(categoria);
     }
 
+    @GetMapping
     public List<CategoriaResponseDTO> listar() {
         return categoriaRepository.findAll()
                 .stream()
@@ -53,13 +62,15 @@ public class CategoriaController {
                 .toList();
     }
 
-    public CategoriaResponseDTO buscarPorId(Long id) {
+    @GetMapping("/buscar{id}")
+    public CategoriaResponseDTO buscarPorId(@PathVariable  Long id) {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
         return CategoriaResponseDTO.fromEntity(categoria);
     }
 
-    public void deletar(Long id) {
+    @DeleteMapping("{id}")
+    public void deletar(@PathVariable Long id) {
         if (!categoriaRepository.existsById(id)) {
             throw new EntityNotFoundException("Categoria não encontrada para exclusão.");
         }

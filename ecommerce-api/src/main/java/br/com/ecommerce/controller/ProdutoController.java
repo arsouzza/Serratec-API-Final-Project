@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,18 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ecommerce.dto.ProdutoRequestDTO;
 import br.com.ecommerce.dto.ProdutoResponseDTO;
+import br.com.ecommerce.repository.ProdutoRepository;
 import br.com.ecommerce.service.ProdutoService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
 
+    private final ProdutoRepository produtoRepository;
+
 	@Autowired
 	private ProdutoService produtoService;
 
-	public ProdutoController(ProdutoService produtoService) {
+	public ProdutoController(ProdutoService produtoService, ProdutoRepository produtoRepository) {
 		this.produtoService = produtoService;
+		this.produtoRepository = produtoRepository;
 	}
 
 	@PostMapping
@@ -46,7 +52,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.atualizar(id, dto));
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/{id}/estoque")
 	public ResponseEntity<ProdutoResponseDTO> atualizarEstoque(@PathVariable Long id, @RequestParam Integer quantidade){
 		ProdutoResponseDTO response = produtoService.atualizarEstoque(id, quantidade);
 		return ResponseEntity.ok(response);
@@ -57,7 +63,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.listar(pageable));
 	}
 
-	@GetMapping
+	@GetMapping("/categoria/{id}")
 	public ResponseEntity<Page<ProdutoResponseDTO>> listarPorCategoria(@PathVariable Long id, Pageable pageable) {
 		return ResponseEntity.ok(produtoService.listarPorCategoria(id, pageable));
 	}
@@ -66,5 +72,12 @@ public class ProdutoController {
 	public ResponseEntity<ProdutoResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(produtoService.buscarPorId(id));
 	}
-
+	
+	@DeleteMapping
+	public void deletar(Long id) {
+		if(produtoRepository.existsById(id)) {
+			throw new EntityNotFoundException("Produto não encontrado para exclusão");
+		}
+		produtoRepository.deleteById(id);
+	}
 }

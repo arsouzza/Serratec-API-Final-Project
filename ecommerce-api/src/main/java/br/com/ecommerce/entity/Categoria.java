@@ -13,10 +13,10 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column
 	private String nome;
 
-	@Column(nullable = false, unique = true)
+	@Column
 	private String descricao;
 
 	public String getDescricao() {

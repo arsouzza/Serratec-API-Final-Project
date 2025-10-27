@@ -2,6 +2,7 @@ package br.com.ecommerce.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+
 import jakarta.validation.constraints.NotNull;
 
 public class ProdutoRequestDTO {
@@ -15,8 +16,9 @@ public class ProdutoRequestDTO {
 	private String descricao;
 	@NotNull(message = "O preço do produto é obrogatório!")
 	private Double preco;
-	@NotBlank(message = "O ID da categoria é obrigatório!")
+    @NotNull(message = "O ID da categoria é obrigatório!")
 	private Long categoriaId;
+	
 	private Integer quantidadeEstoque;
 
 	public ProdutoRequestDTO() {
