@@ -42,7 +42,7 @@ public class ProdutoRequestDTO {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-}
+
 
 	public Long getId() {
 		return id;
