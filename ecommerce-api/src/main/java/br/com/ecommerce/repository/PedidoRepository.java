@@ -1,5 +1,9 @@
 package br.com.ecommerce.repository;
 
-public class PedidoRepository {
+import br.com.ecommerce.entity.Pedido;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
+public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 }
