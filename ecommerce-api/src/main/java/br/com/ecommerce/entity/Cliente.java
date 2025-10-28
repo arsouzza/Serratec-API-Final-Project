@@ -24,7 +24,7 @@ public class Cliente implements UserDetails, Serializable {
 	private Long id;
 	private String nome;
 	private String email;
-	private String senha; // <-- CAMPO ADICIONADO
+	private String senha;
 	private String cpf;
 	private String telefone;
 
