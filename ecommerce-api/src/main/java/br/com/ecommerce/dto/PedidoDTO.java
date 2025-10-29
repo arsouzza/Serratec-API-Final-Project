@@ -1,8 +1,8 @@
 package br.com.ecommerce.dto;
 
-import br.com.ecommerce.entity.Pedido;
-import br.com.ecommerce.enums.StatusPedido;
+public class PedidoDTO {
 
+<<<<<<< HEAD
     private String descricao;
     private Double valor;
 
@@ -30,3 +30,6 @@ import br.com.ecommerce.enums.StatusPedido;
     }
 }
 
+=======
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

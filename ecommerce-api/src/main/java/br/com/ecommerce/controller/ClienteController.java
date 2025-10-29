@@ -1,6 +1,7 @@
 package br.com.ecommerce.controller;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import br.com.ecommerce.dto.ClienteDTO;
 import br.com.ecommerce.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +65,8 @@ public class ClienteController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+=======
+public class ClienteController {
+
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 }

@@ -1,6 +1,7 @@
 package br.com.ecommerce.entity;
 
 import jakarta.persistence.*;
+<<<<<<< HEAD
 
 @Entity
 @Table(name = "cliente")
@@ -63,5 +64,37 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+=======
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Cliente {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(nullable = false)
+	private String nome;
+
+	@Column(nullable = false, unique = true)
+	private String email;
+
+	@Column(nullable = false)
+	private String telefone;
+
+	@Column(nullable = false, unique = true)
+	private String cpf;
+
+	// Um cliente pode ter vários endereços
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Endereco> enderecos;
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 }
 

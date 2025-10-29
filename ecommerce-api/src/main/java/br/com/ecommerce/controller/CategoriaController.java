@@ -1,43 +1,87 @@
 package br.com.ecommerce.controller;
 
 
+<<<<<<< HEAD
 
 public class CategoriaController {
 	
 	
+=======
+import java.util.List;
 
-    @Autowired
-    private CategoriaService service;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDTO> findById(@PathVariable Long id) {
-        CategoriaDTO dto = service.findById(id);
-        return ResponseEntity.ok().body(dto);
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.ecommerce.dto.CategoriaRequestDTO;
+import br.com.ecommerce.dto.CategoriaResponseDTO;
+import br.com.ecommerce.entity.Categoria;
+import br.com.ecommerce.repository.CategoriaRepository;
+import jakarta.persistence.EntityNotFoundException;
+
+@RestController
+@RequestMapping("/categorias")
+public class CategoriaController {
+	
+	@Autowired
+    private CategoriaRepository categoriaRepository;
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
+
+    @PostMapping
+	public CategoriaResponseDTO inserir(@RequestBody CategoriaRequestDTO dto) {
+        if (categoriaRepository.existsByNome(dto.getNome())) {
+            throw new IllegalArgumentException("Já existe uma categoria com esse nome.");
+        }
+
+        Categoria categoria = new Categoria();
+        categoria.setNome(dto.getNome());
+        categoria.setDescricao(dto.getDescricao());
+
+        categoriaRepository.save(categoria);
+        return CategoriaResponseDTO.fromEntity(categoria);
+    }
+
+    @PutMapping("/{id}")
+    public CategoriaResponseDTO atualizar(@PathVariable Long id, @RequestBody CategoriaRequestDTO dto) {
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
+
+        categoria.setNome(dto.getNome());
+        categoria.setDescricao(dto.getDescricao());
+
+        categoriaRepository.save(categoria);
+        return CategoriaResponseDTO.fromEntity(categoria);
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoriaDTO>> findAll() {
-        List<CategoriaDTO> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    public List<CategoriaResponseDTO> listar() {
+        return categoriaRepository.findAll()
+                .stream()
+                .map(CategoriaResponseDTO::fromEntity)
+                .toList();
     }
 
-    @PostMapping
-    public ResponseEntity<CategoriaDTO> insert(@RequestBody CategoriaDTO dto) {
-        dto = service.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+    @GetMapping("/buscar{id}")
+    public CategoriaResponseDTO buscarPorId(@PathVariable  Long id) {
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
+        return CategoriaResponseDTO.fromEntity(categoria);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO dto) {
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    @DeleteMapping("{id}")
+    public void deletar(@PathVariable Long id) {
+        if (!categoriaRepository.existsById(id)) {
+            throw new EntityNotFoundException("Categoria não encontrada para exclusão.");
+        }
+        categoriaRepository.deleteById(id);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }

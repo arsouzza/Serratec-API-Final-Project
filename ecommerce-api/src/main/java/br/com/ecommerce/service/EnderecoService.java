@@ -1,5 +1,6 @@
 package br.com.ecommerce.service;
 
+<<<<<<< HEAD
 import br.com.ecommerce.entity.Cliente;
 import br.com.ecommerce.entity.Endereco;
 import br.com.ecommerce.exception.ResourceNotFoundException;
@@ -80,4 +81,8 @@ public class EnderecoService {
         }
         enderecoRepo.deleteById(id);
     }
+=======
+public class EnderecoService {
+
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 }
