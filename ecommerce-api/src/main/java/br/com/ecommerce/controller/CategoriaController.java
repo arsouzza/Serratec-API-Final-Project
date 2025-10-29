@@ -1,18 +1,10 @@
 package br.com.ecommerce.controller;
 
-import br.com.ecommerce.dto.CategoriaDTO;
-import br.com.ecommerce.service.CategoriaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
 
-@RestController
-@RequestMapping(value = "/categorias")
 public class CategoriaController {
+	
+	
 
     @Autowired
     private CategoriaService service;

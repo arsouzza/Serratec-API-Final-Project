@@ -1,5 +1,6 @@
 package br.com.ecommerce.controller;
 
+<<<<<<< HEAD
 import br.com.ecommerce.dto.ClienteDTO;
 import br.com.ecommerce.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +13,55 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/clientes")
+=======
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.ecommerce.dto.ClienteDTO;
+import br.com.ecommerce.entity.Cliente;
+import br.com.ecommerce.service.ClienteService;
+
+@RestController
+@RequestMapping("/api/clientes")
+>>>>>>> feature/merge-all
 public class ClienteController {
 
     @Autowired
     private ClienteService service;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<ClienteDTO> findById(@PathVariable Long id) {
-        ClienteDTO dto = service.findById(id);
-        return ResponseEntity.ok().body(dto);
+    @GetMapping
+    public List<Cliente> listarTodos() {
+        return service.listarTodos();
     }
 
-    @GetMapping
-    public ResponseEntity<List<ClienteDTO>> findAll() {
-        List<ClienteDTO> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscar(id));
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> insert(@RequestBody ClienteDTO dto) {
-        dto = service.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+    public ResponseEntity<Cliente> criar(@RequestBody ClienteDTO cliente) {
+        return ResponseEntity.ok(service.salvar(cliente));
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ClienteDTO> update(@PathVariable Long id, @RequestBody ClienteDTO dto) {
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
+        return ResponseEntity.ok(service.atualizar(id, cliente));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }

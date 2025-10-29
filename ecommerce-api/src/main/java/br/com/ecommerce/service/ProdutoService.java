@@ -4,77 +4,83 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import br.com.ecommerce.dto.ProdutoDTO;
+import br.com.ecommerce.dto.ProdutoRequestDTO;
+import br.com.ecommerce.dto.ProdutoResponseDTO;
 import br.com.ecommerce.entity.Categoria;
 import br.com.ecommerce.entity.Produto;
-import br.com.ecommerce.exception.RecursoNaoEncontradoException;
 import br.com.ecommerce.repository.CategoriaRepository;
 import br.com.ecommerce.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository repository;
+	@Autowired
+	private ProdutoRepository produtoRepository;
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
-    @Transactional(readOnly = true)
-    public ProdutoDTO findById(Long id) {
-        Produto entity = repository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não encontrado com id: " + id));
-        return new ProdutoDTO(entity);
-    }
+	public Page<ProdutoResponseDTO> listar(Pageable pageable) {
+		return produtoRepository.findAll(pageable).map(ProdutoResponseDTO::fromEntity);
 
-    @Transactional(readOnly = true)
-    public Page<ProdutoDTO> findAll(Pageable pageable) {
-        Page<Produto> page = repository.findAll(pageable);
-        return page.map(ProdutoDTO::new);
-    }
+	}
 
-    @Transactional
-    public ProdutoDTO insert(ProdutoDTO dto) {
-        Produto entity = new Produto();
-        copiarDtoParaEntidade(dto, entity);
-        entity = repository.save(entity);
-        return new ProdutoDTO(entity);
-    }
+	public Page<ProdutoResponseDTO> listarPorCategoria(Long categoriaId, Pageable pageable) {
+		return produtoRepository.findByCategoriaId(categoriaId, pageable).map(ProdutoResponseDTO::fromEntity);
+	}
 
-    @Transactional
-    public ProdutoDTO update(Long id, ProdutoDTO dto) {
-        try {
-            Produto entity = repository.getReferenceById(id);
-            copiarDtoParaEntidade(dto, entity);
-            entity = repository.save(entity);
-            return new ProdutoDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException("Produto não encontrado com id: " + id);
-        }
-    }
+	public ProdutoResponseDTO buscarPorId(Long id) {
+		Produto produto = produtoRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+		return ProdutoResponseDTO.fromEntity(produto);
+	}
 
-    public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new RecursoNaoEncontradoException("Produto não encontrado com id: " + id);
-        }
-        repository.deleteById(id);
-    }
-    
-    private void copiarDtoParaEntidade(ProdutoDTO dto, Produto entity) {
-        entity.setNome(dto.getNome());
-        entity.setDescricao(dto.getDescricao());
-        entity.setPreco(dto.getPreco());
-        entity.setImgUrl(dto.getImgUrl());
+	@Transactional
+	public ProdutoResponseDTO inserir(ProdutoRequestDTO produtoRequestDTO) {
+		Categoria categoria = categoriaRepository.findById(produtoRequestDTO.getCategoriaId())
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
 
-        if (dto.getCategoria() != null && dto.getCategoria().getId() != null) {
-            Categoria categoria = categoriaRepository.findById(dto.getCategoria().getId())
-                    .orElseThrow(() -> new RecursoNaoEncontradoException("Categoria não encontrada com id: " + dto.getCategoria().getId()));
-            entity.setCategoria(categoria);
-        } else {
-            throw new RecursoNaoEncontradoException("Categoria é obrigatória.");
-        }
-    }
+		Produto produto = new Produto();
+		produto.setNome(produtoRequestDTO.getNome());
+		produto.setDescricao(produtoRequestDTO.getDescricao());
+		produto.setPreco(produtoRequestDTO.getPreco());
+		produto.setQuantidadeEstoque(produtoRequestDTO.getQuantidadeEstoque());
+		produto.setCategoria(categoria);
+
+		produtoRepository.save(produto);
+		return ProdutoResponseDTO.fromEntity(produto);
+	}
+
+	public ProdutoResponseDTO atualizar(Long id, ProdutoRequestDTO dto) {
+		Produto produto = produtoRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+
+		Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
+
+		produto.setNome(dto.getNome());
+		produto.setDescricao(dto.getDescricao());
+		produto.setPreco(dto.getPreco());
+		produto.setCategoria(categoria);
+
+		produtoRepository.save(produto);
+		return ProdutoResponseDTO.fromEntity(produto);
+	}
+	
+	@Transactional
+	public ProdutoResponseDTO atualizarEstoque(Long id, Integer quantidade) {
+		Produto produto = produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+	
+		int novoEstoque = produto.getQuantidadeEstoque() + quantidade;
+		if (novoEstoque <=0) {
+			throw new IllegalArgumentException("Estoque não pode ser negativo");
+		}
+		produto.setQuantidadeEstoque(novoEstoque);
+		produtoRepository.save(produto);
+		
+		return ProdutoResponseDTO.fromEntity(produto);
+	}
+
 }

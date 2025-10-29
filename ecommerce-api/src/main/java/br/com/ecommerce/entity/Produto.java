@@ -1,104 +1,102 @@
 package br.com.ecommerce.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import java.io.Serializable;
-import java.util.Objects;
+import jakarta.persistence.*;
+
+
+import java.util.List;
 
 @Entity
-@Table(name = "tb_produto")
-public class Produto implements Serializable {
+public class Produto {
 
-    private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    private String descricao;
-    private Double preco;
-    private String imgUrl; 
+	private String nome;
+	private String descricao;
+	private Double preco;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+	@Column
+    private Integer quantidadeEstoque;
+	
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
 
-    public Produto() {
-    }
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 
-    public Produto(Long id, String nome, String descricao, Double preco, String imgUrl, Categoria categoria) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.imgUrl = imgUrl;
-        this.categoria = categoria;
-    }
+	public List<PedidoProduto> getPedidoProdutos() {
+		return pedidoProdutos;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {
+		this.pedidoProdutos = pedidoProdutos;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
 
-    public String getNome() {
-        return nome;
-    }
+	public Produto() {
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public Produto(Long id, String nome, String descricao, Double preco, Integer quantidadeEstoque, Categoria categoria) {
+			
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.categoria = categoria;
+		this.quantidadeEstoque = quantidadeEstoque;
+		
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	@OneToMany(mappedBy = "produto")
+	private List<PedidoProduto> pedidoProdutos;
 
-    public Double getPreco() {
-        return preco;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public String getNome() {
+		return nome;
+	}
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
+	public Double getPreco() {
+		return preco;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id);
-    }
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	
+
 }

@@ -1,136 +1,64 @@
 package br.com.ecommerce.dto;
 
-import br.com.ecommerce.entity.Cliente;
-import java.io.Serializable;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
-public class ClienteDTO implements Serializable {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ClienteDTO {
+    private Long id;
+    @NotBlank(message = "Nome é obrigatório")
+    private String nome;
+    @Email(message = "Email inválido")
+    private String email;
+    @NotBlank(message = "Telefone é obrigatório")
+    private String telefone;
+    @NotBlank(message = "CPF é obrigatório")
+    @Size(min = 11, max = 14)
+    private String cpf;
 
-	private static final long serialVersionUID = 1L;
+    public Long getId() {
+        return id;
+    }
 
-	private Long id;
-	private String nome;
-	private String email;
-	private String senha; 
-	private String cpf;
-	private String telefone;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	private String cep;
-	private String logradouro;
-	private String complemento;
-	private String bairro;
-	private String localidade;
-	private String uf;
+    public String getNome() {
+        return nome;
+    }
 
-	public ClienteDTO() {
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public ClienteDTO(Cliente entity) {
-		this.id = entity.getId();
-		this.nome = entity.getNome();
-		this.email = entity.getEmail();
-		this.cpf = entity.getCpf();
-		this.telefone = entity.getTelefone();
-		this.cep = entity.getCep();
-		this.logradouro = entity.getLogradouro();
-		this.complemento = entity.getComplemento();
-		this.bairro = entity.getBairro();
-		this.localidade = entity.getLocalidade();
-		this.uf = entity.getUf();
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getTelefone() {
+        return telefone;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getLocalidade() {
-		return localidade;
-	}
-
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }
+
