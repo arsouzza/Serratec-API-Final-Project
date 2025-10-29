@@ -1,49 +1,23 @@
-package br.com.ecommerce.entity;
+package br.com.ecommerce.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "endereco")
-public class Endereco {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EnderecoDTO {
 	private Long id;
-
-	@Column(nullable = false)
+	@NotBlank
 	private String cep;
-
-	@Column(nullable = false)
+	@NotBlank
 	private String logradouro;
-
 	private String complemento;
-
-	@Column(nullable = false)
+	@NotBlank
 	private String bairro;
-
-	@Column(nullable = false)
+	@NotBlank
 	private String localidade;
-
-	@Column(nullable = false)
+	@NotBlank
 	private String uf;
+	private Long clienteId;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
-	private Cliente cliente;
-
-	public Endereco() {
-	}
-
-	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String localidade,
-			String uf, Cliente cliente) {
-		this.id = id;
-		this.cep = cep;
-		this.logradouro = logradouro;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.localidade = localidade;
-		this.uf = uf;
-		this.cliente = cliente;
+	public EnderecoDTO() {
 	}
 
 	public Long getId() {
@@ -102,11 +76,11 @@ public class Endereco {
 		this.uf = uf;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Long getClienteId() {
+		return clienteId;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setClienteId(Long clienteId) {
+		this.clienteId = clienteId;
 	}
 }
