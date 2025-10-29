@@ -26,7 +26,6 @@ public class Endereco {
 	@Column(nullable = false)
 	private String uf;
 
-	// Relação com o cliente
 	@ManyToOne
 	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
@@ -111,5 +110,4 @@ public class Endereco {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
 }

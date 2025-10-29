@@ -1,14 +1,12 @@
 package br.com.ecommerce.repository;
 
-import java.util.Optional;
-
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import br.com.ecommerce.entity.Endereco;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
-
-	Optional<Endereco> findByCep(String cep);
-
+	List<Endereco> findByClienteId(Long clienteId);
 }
