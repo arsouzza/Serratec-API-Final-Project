@@ -1,17 +1,5 @@
 package br.com.ecommerce.dto;
 
-<<<<<<< HEAD
-
-
-   public record CategoriaResponseDTO(
-		    
-		) {
-		   
-		}
-	
-
-
-=======
 import br.com.ecommerce.entity.Categoria;
 
    public record CategoriaResponseDTO(
@@ -28,4 +16,3 @@ import br.com.ecommerce.entity.Categoria;
 		    }
 		}
 	
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

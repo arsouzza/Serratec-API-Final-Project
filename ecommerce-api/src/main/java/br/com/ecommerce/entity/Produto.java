@@ -1,8 +1,6 @@
 package br.com.ecommerce.entity;
 
-<<<<<<< HEAD
 import jakarta.persistence.*;
-
 
 import java.util.List;
 
@@ -18,8 +16,8 @@ public class Produto {
 	private Double preco;
 
 	@Column
-    private Integer quantidadeEstoque;
-	
+	private Integer quantidadeEstoque;
+
 	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;
 	}
@@ -44,15 +42,16 @@ public class Produto {
 
 	}
 
-	public Produto(Long id, String nome, String descricao, Double preco, Integer quantidadeEstoque, Categoria categoria) {
-			
+	public Produto(Long id, String nome, String descricao, Double preco, Integer quantidadeEstoque,
+			Categoria categoria) {
+
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.categoria = categoria;
 		this.quantidadeEstoque = quantidadeEstoque;
-		
+
 	}
 
 	@OneToMany(mappedBy = "produto")
@@ -98,11 +97,4 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	
-
 }
-=======
-public class Produto {
-
-}
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

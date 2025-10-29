@@ -1,6 +1,5 @@
 package br.com.ecommerce.service;
 
-<<<<<<< HEAD
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import br.com.ecommerce.dto.PedidoRequestDTO;
@@ -13,43 +12,31 @@ import br.com.ecommerce.repository.PedidoRepository;
 @Service
 public class PedidoService {
 
-    private final PedidoRepository pedidoRepository;
-    private final ClienteRepository clienteRepository;
+	private final PedidoRepository pedidoRepository;
+	private final ClienteRepository clienteRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
-        this.pedidoRepository = pedidoRepository;
-        this.clienteRepository = clienteRepository;
-    }
+	public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
+		this.pedidoRepository = pedidoRepository;
+		this.clienteRepository = clienteRepository;
+	}
 
-    @Transactional
-    public PedidoResponseDTO criar(PedidoRequestDTO dto) {
-      
-        Cliente cliente = clienteRepository.findById(dto.getIdCliente())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + dto.getIdCliente()));
+	@Transactional
+	public PedidoResponseDTO criar(PedidoRequestDTO dto) {
 
-     
-        Pedido pedido = new Pedido();
-        pedido.setDescricao(dto.getDescricao());
-        pedido.setValor(dto.getValor());
-        pedido.setCliente(cliente);
-        Pedido salvo = pedidoRepository.save(pedido);
+		Cliente cliente = clienteRepository.findById(dto.getIdCliente())
+				.orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + dto.getIdCliente()));
 
-       
-        Double total = pedidoRepository.somaTotalPorCliente(cliente.getId());
-        if (total == null) total = 0.0;
+		Pedido pedido = new Pedido();
+		pedido.setDescricao(dto.getDescricao());
+		pedido.setValor(dto.getValor());
+		pedido.setCliente(cliente);
+		Pedido salvo = pedidoRepository.save(pedido);
 
-    
-        return new PedidoResponseDTO(
-                salvo.getId(),
-                salvo.getDescricao(),
-                salvo.getValor(),
-                salvo.getDataPedido(),
-                total
-        );
-    }
+		Double total = pedidoRepository.somaTotalPorCliente(cliente.getId());
+		if (total == null)
+			total = 0.0;
+
+		return new PedidoResponseDTO(salvo.getId(), salvo.getDescricao(), salvo.getValor(), salvo.getDataPedido(),
+				total);
+	}
 }
-=======
-public class PedidoService {
-
-}
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

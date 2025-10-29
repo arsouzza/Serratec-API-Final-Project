@@ -1,6 +1,5 @@
 package br.com.ecommerce.service;
 
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -69,25 +68,20 @@ public class ProdutoService {
 		produtoRepository.save(produto);
 		return ProdutoResponseDTO.fromEntity(produto);
 	}
-	
+
 	@Transactional
 	public ProdutoResponseDTO atualizarEstoque(Long id, Integer quantidade) {
-		Produto produto = produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
-	
+		Produto produto = produtoRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+
 		int novoEstoque = produto.getQuantidadeEstoque() + quantidade;
-		if (novoEstoque <=0) {
+		if (novoEstoque <= 0) {
 			throw new IllegalArgumentException("Estoque não pode ser negativo");
 		}
 		produto.setQuantidadeEstoque(novoEstoque);
 		produtoRepository.save(produto);
-		
+
 		return ProdutoResponseDTO.fromEntity(produto);
 	}
 
 }
-=======
-
-public class ProdutoService {
-
-}
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

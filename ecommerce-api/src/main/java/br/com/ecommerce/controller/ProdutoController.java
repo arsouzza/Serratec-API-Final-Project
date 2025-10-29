@@ -1,6 +1,5 @@
 package br.com.ecommerce.controller;
 
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -28,7 +27,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("api/produtos")
 public class ProdutoController {
 
     private final ProdutoRepository produtoRepository;
@@ -82,10 +81,3 @@ public class ProdutoController {
 		produtoRepository.deleteById(id);
 	}
 }
-=======
-
-public class ProdutoController {
-
-    
-}
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

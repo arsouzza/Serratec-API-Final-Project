@@ -1,22 +1,17 @@
 package br.com.ecommerce.dto;
 
-<<<<<<< HEAD
-public class CategoriaRequestDTO {
-
-}
-=======
 import jakarta.validation.constraints.NotBlank;
 
 public class CategoriaRequestDTO {
-	
+
 	@NotBlank(message = "O nome é obrigatório!")
 	String nome;
-	
+
 	@NotBlank(message = "A descrição é obrigatória!")
 	String descricao;
-	
+
 	public CategoriaRequestDTO() {
-		
+
 	}
 
 	public CategoriaRequestDTO(@NotBlank(message = "O nome é obrigatório!") String nome,
@@ -42,8 +37,4 @@ public class CategoriaRequestDTO {
 		this.descricao = descricao;
 	}
 
-	
-	
-
 }
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

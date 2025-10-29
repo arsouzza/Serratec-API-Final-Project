@@ -1,15 +1,6 @@
 package br.com.ecommerce.controller;
 
-
-<<<<<<< HEAD
-
-public class CategoriaController {
-	
-	
-=======
 import java.util.List;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,60 +19,56 @@ import br.com.ecommerce.repository.CategoriaRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("api/categorias")
 public class CategoriaController {
-	
+
 	@Autowired
-    private CategoriaRepository categoriaRepository;
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
+	private CategoriaRepository categoriaRepository;
 
-    @PostMapping
+	@PostMapping
 	public CategoriaResponseDTO inserir(@RequestBody CategoriaRequestDTO dto) {
-        if (categoriaRepository.existsByNome(dto.getNome())) {
-            throw new IllegalArgumentException("Já existe uma categoria com esse nome.");
-        }
+		if (categoriaRepository.existsByNome(dto.getNome())) {
+			throw new IllegalArgumentException("Já existe uma categoria com esse nome.");
+		}
 
-        Categoria categoria = new Categoria();
-        categoria.setNome(dto.getNome());
-        categoria.setDescricao(dto.getDescricao());
+		Categoria categoria = new Categoria();
+		categoria.setNome(dto.getNome());
+		categoria.setDescricao(dto.getDescricao());
 
-        categoriaRepository.save(categoria);
-        return CategoriaResponseDTO.fromEntity(categoria);
-    }
+		categoriaRepository.save(categoria);
+		return CategoriaResponseDTO.fromEntity(categoria);
+	}
 
-    @PutMapping("/{id}")
-    public CategoriaResponseDTO atualizar(@PathVariable Long id, @RequestBody CategoriaRequestDTO dto) {
-        Categoria categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
+	@PutMapping("/{id}")
+	public CategoriaResponseDTO atualizar(@PathVariable Long id, @RequestBody CategoriaRequestDTO dto) {
+		Categoria categoria = categoriaRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
 
-        categoria.setNome(dto.getNome());
-        categoria.setDescricao(dto.getDescricao());
+		categoria.setNome(dto.getNome());
+		categoria.setDescricao(dto.getDescricao());
 
-        categoriaRepository.save(categoria);
-        return CategoriaResponseDTO.fromEntity(categoria);
-    }
+		categoriaRepository.save(categoria);
+		return CategoriaResponseDTO.fromEntity(categoria);
+	}
 
-    @GetMapping
-    public List<CategoriaResponseDTO> listar() {
-        return categoriaRepository.findAll()
-                .stream()
-                .map(CategoriaResponseDTO::fromEntity)
-                .toList();
-    }
+	@GetMapping
+	public List<CategoriaResponseDTO> listar() {
+		return categoriaRepository.findAll().stream().map(CategoriaResponseDTO::fromEntity).toList();
+	}
 
-    @GetMapping("/buscar{id}")
-    public CategoriaResponseDTO buscarPorId(@PathVariable  Long id) {
-        Categoria categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
-        return CategoriaResponseDTO.fromEntity(categoria);
-    }
+	@GetMapping("/buscar{id}")
+	public CategoriaResponseDTO buscarPorId(@PathVariable Long id) {
+		Categoria categoria = categoriaRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada."));
+		return CategoriaResponseDTO.fromEntity(categoria);
+	}
 
-    @DeleteMapping("{id}")
-    public void deletar(@PathVariable Long id) {
-        if (!categoriaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Categoria não encontrada para exclusão.");
-        }
-        categoriaRepository.deleteById(id);
-    }
+	@DeleteMapping("{id}")
+	public void deletar(@PathVariable Long id) {
+		if (!categoriaRepository.existsById(id)) {
+			throw new EntityNotFoundException("Categoria não encontrada para exclusão.");
+		}
+		categoriaRepository.deleteById(id);
+	}
 
 }

@@ -1,6 +1,5 @@
 package br.com.ecommerce.dto;
 
-<<<<<<< HEAD
 import jakarta.validation.constraints.NotBlank;
 
 
@@ -89,8 +88,3 @@ public class ProdutoRequestDTO {
 	}
 
 }
-=======
-public class ProdutoRequestDTO {
-
-}
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
