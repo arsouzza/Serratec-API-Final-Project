@@ -3,7 +3,6 @@ package br.com.ecommerce.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "endereco")
 public class Endereco {
 
 	@Id
@@ -22,7 +21,7 @@ public class Endereco {
 	private String bairro;
 
 	@Column(nullable = false)
-	private String localidade;
+	private String cidade;
 
 	@Column(nullable = false)
 	private String uf;
@@ -32,16 +31,18 @@ public class Endereco {
 	private Cliente cliente;
 
 	public Endereco() {
+
 	}
 
-	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String localidade,
-			String uf, Cliente cliente) {
+	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String cidade, String uf,
+			Cliente cliente) {
+		super();
 		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.localidade = localidade;
+		this.cidade = cidade;
 		this.uf = uf;
 		this.cliente = cliente;
 	}
@@ -86,12 +87,12 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public String getLocalidade() {
-		return localidade;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	public String getUf() {

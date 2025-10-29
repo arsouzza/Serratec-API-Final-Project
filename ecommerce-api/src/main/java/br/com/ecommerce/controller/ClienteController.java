@@ -1,69 +1,52 @@
 package br.com.ecommerce.controller;
 
-import br.com.ecommerce.dto.ClienteDTO;
-import br.com.ecommerce.dto.EnderecoDTO;
-import br.com.ecommerce.entity.Cliente;
-import br.com.ecommerce.entity.Endereco;
-import br.com.ecommerce.service.ClienteService;
-import br.com.ecommerce.service.EnderecoService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
-import java.util.List;
+import br.com.ecommerce.dto.ClienteDTO;
+import br.com.ecommerce.entity.Cliente;
+import br.com.ecommerce.service.ClienteService;
 
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-	@Autowired
-	private final ClienteService clienteService;
-	@Autowired
-	private final EnderecoService enderecoService;
+    @Autowired
+    private ClienteService service;
 
-	public ClienteController(ClienteService clienteService, EnderecoService enderecoService) {
-		this.clienteService = clienteService;
-		this.enderecoService = enderecoService;
-	}
+    @GetMapping
+    public List<Cliente> listarTodos() {
+        return service.listarTodos();
+    }
 
-	@GetMapping
-	public ResponseEntity<List<Cliente>> listar() {
-		return ResponseEntity.ok(clienteService.listar());
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscar(id));
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
-		return ResponseEntity.ok(clienteService.buscar(id));
-	}
+    @PostMapping
+    public ResponseEntity<Cliente> criar(@RequestBody ClienteDTO cliente) {
+        return ResponseEntity.ok(service.salvar(cliente));
+    }
 
-	@PostMapping
-	public ResponseEntity<Cliente> criar(@Valid @RequestBody ClienteDTO dto) {
-		return ResponseEntity.ok(clienteService.criar(dto));
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
+        return ResponseEntity.ok(service.atualizar(id, cliente));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @Valid @RequestBody ClienteDTO dto) {
-		return ResponseEntity.ok(clienteService.atualizar(id, dto));
-	}
-
-	@PostMapping("/{clienteId}/enderecos/cep/{cep}")
-	public ResponseEntity<Endereco> criarPorCep(@PathVariable Long clienteId, @PathVariable String cep) {
-		Endereco e = clienteService.criarEnderecoPorCep(clienteId, cep);
-		return ResponseEntity.ok(e);
-	}
-
-	@PostMapping("/{clienteId}/enderecos")
-	public ResponseEntity<Endereco> criarEndereco(@PathVariable Long clienteId, @Valid @RequestBody EnderecoDTO dto) {
-		Endereco e = new Endereco();
-		e.setCep(dto.getCep());
-		e.setLogradouro(dto.getLogradouro());
-		e.setComplemento(dto.getComplemento());
-		e.setBairro(dto.getBairro());
-		e.setLocalidade(dto.getLocalidade());
-		e.setUf(dto.getUf());
-		e.setCliente(clienteService.buscar(clienteId));
-		return ResponseEntity.ok(enderecoService.criar(e));
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }
