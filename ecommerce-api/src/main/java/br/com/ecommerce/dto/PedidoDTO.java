@@ -2,6 +2,7 @@ package br.com.ecommerce.dto;
 
 public class PedidoDTO {
 
+<<<<<<< HEAD
     private String descricao;
     private Double valor;
 
@@ -29,3 +30,6 @@ public class PedidoDTO {
     }
 }
 
+=======
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

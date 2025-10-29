@@ -1,5 +1,20 @@
 package br.com.ecommerce.controller;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+import br.com.ecommerce.dto.ClienteDTO;
+import br.com.ecommerce.service.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/clientes")
+=======
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +34,7 @@ import br.com.ecommerce.service.ClienteService;
 
 @RestController
 @RequestMapping("/api/clientes")
+>>>>>>> feature/merge-all
 public class ClienteController {
 
     @Autowired
@@ -49,4 +65,8 @@ public class ClienteController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+=======
+public class ClienteController {
+
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 }

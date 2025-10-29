@@ -1,5 +1,6 @@
 package br.com.ecommerce.service;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +67,8 @@ public class ClienteService {
         Cliente salvo = repository.save(c);
         return salvo;
     }
+=======
+public class ClienteService {
+
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 }

@@ -1,5 +1,6 @@
 package br.com.ecommerce.service;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -84,3 +85,9 @@ public class ProdutoService {
 	}
 
 }
+=======
+
+public class ProdutoService {
+
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

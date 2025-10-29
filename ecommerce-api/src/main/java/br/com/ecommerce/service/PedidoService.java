@@ -1,5 +1,6 @@
 package br.com.ecommerce.service;
 
+<<<<<<< HEAD
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import br.com.ecommerce.dto.PedidoRequestDTO;
@@ -47,3 +48,8 @@ public class PedidoService {
         );
     }
 }
+=======
+public class PedidoService {
+
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

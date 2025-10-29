@@ -1,5 +1,6 @@
 package br.com.ecommerce.entity;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
 
 
@@ -100,3 +101,8 @@ public class Produto {
 	
 
 }
+=======
+public class Produto {
+
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71

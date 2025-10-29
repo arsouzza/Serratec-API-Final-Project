@@ -1,5 +1,6 @@
 package br.com.ecommerce.dto;
 
+<<<<<<< HEAD
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -62,3 +63,8 @@ public class ClienteDTO {
     }
 }
 
+=======
+public class ClienteDTO {
+
+}
+>>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
