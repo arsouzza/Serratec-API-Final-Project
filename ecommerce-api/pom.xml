@@ -5,11 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-<<<<<<< HEAD
-		<version>3.5.7</version>
-=======
 		<version>3.5.6</version>
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.projeto</groupId>
@@ -34,11 +30,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-<<<<<<< HEAD
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-=======
         <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -106,7 +97,6 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-test</artifactId>
 		    <scope>test</scope>
->>>>>>> f5c82d88e7d3da48b09ba93edd5c56a7d5410f71
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
