@@ -13,7 +13,7 @@ import br.com.ecommerce.service.FornecedorService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/fornecedores")
+@RequestMapping("api/fornecedores")
 public class FornecedorController {
 
 	private final FornecedorService fornecedorService;

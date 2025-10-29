@@ -3,6 +3,9 @@ package br.com.ecommerce.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -14,6 +17,7 @@ public class Pedido {
 	private Double valor;
 	private LocalDateTime dataPedido = LocalDateTime.now();
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
