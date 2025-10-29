@@ -1,5 +1,10 @@
 package br.com.ecommerce.entity;
 
+<<<<<<< HEAD
+import br.com.ecommerce.entity.enums.StatusPedido;
+
+=======
+>>>>>>> feature/merge-all
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
